@@ -2,16 +2,14 @@ import unittest
 import io
 import sys
 
-EXPECTED_1: str = 'Testing'
-EXCEPTION_1: str = 'File not found, check that the file exists in that path'
-TEST_FILE_1: str = 'this-file-should-not-exist.txt'
-TEST_FILE_2: str = 'commands.txt'
+from main import openFile
 
 class TestClass(unittest.TestCase):
   def test_existing_file(self):
     file_name = 'testing.txt'
     file = openFile(file_name)
     self.assertIsNotNone(file)
+    file.close()
 
   def test_handleErrorWhenFileNotExists(self):
     expectionMessage: str = 'File not found, check that the file exists in that path'
