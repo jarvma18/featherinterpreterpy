@@ -6,6 +6,10 @@ from main import openFile
 from main import interpret
 from main import splitString
 from main import validateAction
+from main import executeSelectingAction
+from main import executeItemDownOrUpAction
+from main import executeDrawingAction
+from main import executeActions
 
 class TestClass(unittest.TestCase):
   def test_existing_file(self):
@@ -85,8 +89,99 @@ class TestClass(unittest.TestCase):
     result: str = validateAction(action)
     self.assertEqual(expectedValue, result)
 
-  def test_validateAction(self):
-    action: str = 'Z'
-    expectedValue: str = 'invalid_action'
-    result: str = validateAction(action)
+  def test_executeAction(self):
+    action: str = 'select_pen'
+    penNumberToSelect: str = '2'
+    expectedValue: str = 'Selecting pen 2'
+    result: str = executeSelectingAction(action, penNumberToSelect)
     self.assertEqual(expectedValue, result)
+
+  def test_executeAction(self):
+    action: str = 'item_down'
+    item: str = 'pen'
+    expectedValue: str = 'Putting pen down'
+    result: str = executeItemDownOrUpAction(action, item)
+    self.assertEqual(expectedValue, result)
+
+  def test_executeAction(self):
+    action: str = 'item_up'
+    item: str = 'pen'
+    expectedValue: str = 'Putting pen up'
+    result: str = executeItemDownOrUpAction(action, item)
+    self.assertEqual(expectedValue, result)
+
+  def test_executeAction(self):
+    action: str = 'draw_west'
+    length: str = '2'
+    unit: str = 'cm'
+    expectedValue: str = 'Drawing 2cm to west'
+    result: str = executeDrawingAction(action, length, unit)
+    self.assertEqual(expectedValue, result)
+
+  def test_executeAction(self):
+    action: str = 'draw_north'
+    length: str = '1'
+    unit: str = 'cm'
+    expectedValue: str = 'Drawing 1cm to north'
+    result: str = executeDrawingAction(action, length, unit)
+    self.assertEqual(expectedValue, result)
+
+  def test_executeAction(self):
+    action: str = 'draw_east'
+    length: str = '2'
+    unit: str = 'cm'
+    expectedValue: str = 'Drawing 2cm to east'
+    result: str = executeDrawingAction(action, length, unit)
+    self.assertEqual(expectedValue, result)
+
+  def test_executeAction(self):
+    action: str = 'draw_south'
+    length: str = '1'
+    unit: str = 'cm'
+    expectedValue: str = 'Drawing 1cm to south'
+    result: str = executeDrawingAction(action, length, unit)
+    self.assertEqual(expectedValue, result)
+
+  def test_executeActions(self):
+    action: list = ['select', 'pen']
+    actionNumber: str = '2'
+    currentSelectedItem: str = ''
+    expectedValue: str = 'Selecting pen 2'
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    executeActions(action, actionNumber, currentSelectedItem)
+    sys.stdout = sys.__stdout__
+    self.assertEqual(expectedValue, capturedOutput.getvalue())
+
+  def test_executeActions(self):
+    action: list = ['item', 'down']
+    actionNumber: str = '2'
+    currentSelectedItem: str = 'pen'
+    expectedValue: str = 'Putting pen down'
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    executeActions(action, actionNumber, currentSelectedItem)
+    sys.stdout = sys.__stdout__
+    self.assertEqual(expectedValue, capturedOutput.getvalue())
+
+  def test_executeActions(self):
+    action: list = ['draw', 'west']
+    actionNumber: str = '2'
+    currentSelectedItem: str = ''
+    expectedValue: str = 'Drawing 2cm to west'
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    executeActions(action, actionNumber, currentSelectedItem)
+    sys.stdout = sys.__stdout__
+    self.assertEqual(expectedValue, capturedOutput.getvalue())
+
+  def test_executeActions(self):
+    action: list = 'invalid_action'
+    actionNumber: str = '2'
+    currentSelectedItem: str = ''
+    expectedValue: str = 'Invalid action'
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    executeActions(action, actionNumber, currentSelectedItem)
+    sys.stdout = sys.__stdout__
+    self.assertEqual(expectedValue, capturedOutput.getvalue())
