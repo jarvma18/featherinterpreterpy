@@ -7,7 +7,6 @@ from main import interpret
 from main import splitString
 from main import validateAction
 
-
 class TestClass(unittest.TestCase):
   def test_existing_file(self):
     file_name = 'testing.txt'
