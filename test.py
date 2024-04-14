@@ -3,6 +3,10 @@ import io
 import sys
 
 from main import openFile
+from main import interpret
+from main import splitString
+from main import validateAction
+
 
 class TestClass(unittest.TestCase):
   def test_existing_file(self):
@@ -18,106 +22,72 @@ class TestClass(unittest.TestCase):
       openFile(testFile)
     self.assertTrue(expectionMessage in str(context.exception))
 
-  # def test_(self):
-  #   capturedOutput = io.StringIO()
-  #   sys.stdout = capturedOutput
-  #   action: list = TEST_DATA_1
-  #   expectedValue: str = EXPECTED_1
-  #   printWordsFromArray(action)
-  #   sys.stdout = sys.__stdout__
-  #   self.assertEqual(expectedValue, capturedOutput.getvalue())
+  def test_interpret(self):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    file: str = 'commands.txt'
+    expectedValue: str = \
+      '\nSelecting pen 2\
+      \nPutting pen down\
+      \nDrawing west 2cm\
+      \nDrawing north 1cm\
+      \nDrawing east 2cm\
+      \nDrawing south 1cm\
+      \nPutting pen up'
+    interpret(file)
+    sys.stdout = sys.__stdout__
+    self.assertEqual(expectedValue, capturedOutput.getvalue())
+
+  def test_splitString(self):
+    string: str = 'P 2'
+    expectedValue: list = ['P', '2']
+    result: list = splitString(string)
+    self.assertEqual(expectedValue, result)
 
   def test_validateAction(self):
     action: str = 'P'
-    expectedValue: str = 'select_pen'
+    expectedValue: str = ['select', 'pen']
     result: str = validateAction(action)
     self.assertEqual(expectedValue, result)
 
   def test_validateAction(self):
     action: str = 'D'
-    expectedValue: str = 'item_down'
+    expectedValue: str = ['item', 'down']
     result: str = validateAction(action)
     self.assertEqual(expectedValue, result)
 
   def test_validateAction(self):
     action: str = 'W'
-    expectedValue: str = 'draw_west'
+    expectedValue: str = ['draw', 'west']
     result: str = validateAction(action)
     self.assertEqual(expectedValue, result)
 
   def test_validateAction(self):
     action: str = 'N'
-    expectedValue: str = 'draw_north'
+    expectedValue: str = ['draw', 'north']
     result: str = validateAction(action)
     self.assertEqual(expectedValue, result)
 
   def test_validateAction(self):
     action: str = 'E'
-    expectedValue: str = 'draw_east'
+    expectedValue: str = ['draw', 'east']
     result: str = validateAction(action)
     self.assertEqual(expectedValue, result)
 
   def test_validateAction(self):
     action: str = 'S'
-    expectedValue: str = 'draw_south'
+    expectedValue: str = ['draw', 'south']
     result: str = validateAction(action)
     self.assertEqual(expectedValue, result)
 
   def test_validateAction(self):
     action: str = 'U'
-    expectedValue: str = 'item_up'
+    expectedValue: str = ['item', 'up']
     result: str = validateAction(action)
     self.assertEqual(expectedValue, result)
 
-  def test_executeAction(self):
-    action: str = 'select_pen'
-    penNumberToSelect: str = '2'
-    expectedValue: str = 'Selecting pen 2'
-    result: str = executeSelectingAction(action, penNumberToSelect)
-    self.assertEqual(expectedValue, result)
-
-  def test_executeAction(self):
-    action: str = 'item_down'
-    item: str = 'pen'
-    expectedValue: str = 'Putting pen down'
-    result: str = executeItemDownOrUpAction(action, item)
-    self.assertEqual(expectedValue, result)
-
-  def test_executeAction(self):
-    action: str = 'item_up'
-    item: str = 'pen'
-    expectedValue: str = 'Putting pen up'
-    result: str = executeItemDownOrUpAction(action, item)
-    self.assertEqual(expectedValue, result)
-
-  def test_executeAction(self):
-    action: str = 'draw_west'
-    length: str = '2'
-    unit: str = 'cm'
-    expectedValue: str = 'Drawing 2cm to west'
-    result: str = executeDrawingAction(action, length, unit)
-    self.assertEqual(expectedValue, result)
-
-  def test_executeAction(self):
-    action: str = 'draw_north'
-    length: str = '1'
-    unit: str = 'cm'
-    expectedValue: str = 'Drawing 1cm to north'
-    result: str = executeDrawingAction(action, length, unit)
-    self.assertEqual(expectedValue, result)
-
-  def test_executeAction(self):
-    action: str = 'draw_east'
-    length: str = '2'
-    unit: str = 'cm'
-    expectedValue: str = 'Drawing 2cm to east'
-    result: str = executeDrawingAction(action, length, unit)
-    self.assertEqual(expectedValue, result)
-
-  def test_executeAction(self):
-    action: str = 'draw_south'
-    length: str = '1'
-    unit: str = 'cm'
-    expectedValue: str = 'Drawing 1cm to south'
-    result: str = executeDrawingAction(action, length, unit)
+  def test_validateAction(self):
+    action: str = 'Z'
+    expectedValue: str = 'invalid_action'
+    result: str = validateAction(action)
     self.assertEqual(expectedValue, result)
