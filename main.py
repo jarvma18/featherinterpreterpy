@@ -40,25 +40,28 @@ def executeDrawingAction(direction: str, length: int, unit: str):
   return 'Drawing ' + length + unit + ' to' + ' ' + direction
 
 def executeActions(action: list, actionNumber: str, currentSelectedItem: str):
-  if action == 'invalid_action':
-    print('Invalid action')
-  elif action[0] == 'select':
-    currentSelectedItem = action[1]
+  if action[0] == 'select':
     print(executeSelectingAction(action[1], actionNumber))
   elif action[0] == 'item':
     print(executeItemDownOrUpAction(currentSelectedItem, action[1]))
   elif action[0] == 'draw':
     print(executeDrawingAction(action[1], actionNumber, 'cm'))
+  else:
+    print('Invalid action')
 
 def interpret(fileName: str):
   file: __file__ = openFile(fileName)
   commands: list = readFile(file)
+  file.close()
+  currentSelectedItem: str = ''
   for command in commands:
     value: list = splitString(command)
     action: str = value[0]
-    actionNumber: str = value[1]
+    if (len(value) > 1):
+      actionNumber: str = value[1]
     action: list = validateAction(action)
-    currentSelectedItem: str = ''
+    if action[0] == 'select':
+      currentSelectedItem: str = action[1]
     executeActions(action, actionNumber, currentSelectedItem)
 
 if __name__ == '__main__':
