@@ -2,14 +2,14 @@ import unittest
 import io
 import sys
 
-from main import openFile
-from main import interpret
-from main import splitString
-from main import validateAction
-from main import executeSelectingAction
-from main import executeItemDownOrUpAction
-from main import executeDrawingAction
-from main import executeActions
+from interpretters.external import openFile
+from interpretters.external import interpret
+from interpretters.external import splitString
+from interpretters.external import validateAction
+from interpretters.external import executeSelectingAction
+from interpretters.external import executeItemDownOrUpAction
+from interpretters.external import executeDrawingAction
+from interpretters.external import executeActions
 
 class TestClass(unittest.TestCase):
   def test_existing_file(self):
