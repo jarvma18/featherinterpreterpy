@@ -1,24 +1,37 @@
 import sys
 
+def printUsage():
+  print('Usage: python main.py <interpretter> [<filename>]')
+
+def external(arguments: list):
+  from interpretters.external import externalInterpret
+  if len(arguments) < 2:
+    printUsage()
+    sys.exit(1)
+  fileName: str = arguments[1]
+  externalInterpret(fileName)
+
+def internal():
+  from interpretters.internal import internalInterpret
+  internalInterpret()
+
+def validateUserArguments(arguments: list):
+  if len(arguments) < 1:
+    printUsage()
+    sys.exit(1)
+
 def main():
   arguments: list = sys.argv[1:]
   if len(arguments) < 1:
-    print('Usage: python main.py <interpretter> [<filename>]')
-    sys.exit(1)
+    validateUserArguments(arguments)
   interpretter: str = arguments[0]
   if interpretter == 'external':
-    from interpretters.external import interpret
-    if len(arguments) < 2:
-      print('Usage: python main.py external <filename>')
-      sys.exit(1)
-    fileName: str = arguments[1]
+    external(arguments)
   elif interpretter == 'internal':
-    from interpretters.internal import interpret
-    fileName: str = None
+    internal()
   else:
     print('Invalid interpretter')
     sys.exit(1)
-  interpret(fileName)
 
 if __name__ == "__main__":
   main()
