@@ -1,7 +1,7 @@
 import sys
 
 def printUsage():
-  print('Usage: python main.py <interpretter> [<filename>]')
+  print('Usage: python3 main.py <interpretter> [<filename>]')
 
 def external(arguments: list):
   from interpretters.external import externalInterpret
