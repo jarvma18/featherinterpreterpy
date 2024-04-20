@@ -11,6 +11,12 @@ from interpretters.external import executeItemDownOrUpAction
 from interpretters.external import executeDrawingAction
 from interpretters.external import executeActions
 
+from interpretters.internal import interpret
+from interpretters.internal import selectItem
+from interpretters.internal import putItemDown
+from interpretters.internal import putItemUp
+from interpretters.internal import draw
+
 class TestClass(unittest.TestCase):
   def test_existing_file(self):
     file_name = 'testing.txt'
