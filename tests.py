@@ -3,7 +3,7 @@ import io
 import sys
 
 from interpretters.external import openFile
-from interpretters.external import interpret
+from interpretters.external import externalInterpret
 from interpretters.external import splitString
 from interpretters.external import validateAction
 from interpretters.external import executeSelectingAction
@@ -11,13 +11,58 @@ from interpretters.external import executeItemDownOrUpAction
 from interpretters.external import executeDrawingAction
 from interpretters.external import executeActions
 
-from interpretters.internal import interpret
-from interpretters.internal import selectItem
-from interpretters.internal import putItemDown
-from interpretters.internal import putItemUp
-from interpretters.internal import draw
+from interpretters.internal import internalInterpret
+from interpretters.internal import Tasks
 
-class TestClass(unittest.TestCase):
+class InternalInterpretTestClass(unittest.TestCase):
+  def test_selectPen(self):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    expectedValue: str = 'Selecting pen 2\n'
+    Tasks().selectPen('2')
+    sys.stdout = sys.__stdout__
+    self.assertEqual(expectedValue, capturedOutput.getvalue())
+
+  def test_itemDown(self):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    expectedValue: str = 'Putting pen down\n'
+    Tasks().itemDown('pen')
+    sys.stdout = sys.__stdout__
+    self.assertEqual(expectedValue, capturedOutput.getvalue())
+
+  def test_itemUp(self):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    expectedValue: str = 'Putting pen up\n'
+    Tasks().itemUp('pen')
+    sys.stdout = sys.__stdout__
+    self.assertEqual(expectedValue, capturedOutput.getvalue())
+
+  def test_draw(self):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    expectedValue: str = 'Drawing 2cm to west\n'
+    Tasks().draw('west', '2', 'cm')
+    sys.stdout = sys.__stdout__
+    self.assertEqual(expectedValue, capturedOutput.getvalue())
+
+  def test_interpret(self):
+    capturedOutput = io.StringIO()
+    sys.stdout = capturedOutput
+    expectedValue: str = \
+      'Selecting pen 2\n' + \
+      'Putting pen down\n' + \
+      'Drawing 2cm to west\n' + \
+      'Drawing 1cm to north\n' + \
+      'Drawing 2cm to east\n' + \
+      'Drawing 1cm to south\n' + \
+      'Putting pen up\n'
+    internalInterpret()
+    sys.stdout = sys.__stdout__
+    self.assertEqual(expectedValue, capturedOutput.getvalue())
+
+class ExternalInterpretTestClass(unittest.TestCase):
   def test_existing_file(self):
     file_name = 'testing.txt'
     file = openFile(file_name)
@@ -43,7 +88,7 @@ class TestClass(unittest.TestCase):
       'Drawing 2cm to east\n' + \
       'Drawing 1cm to south\n' + \
       'Putting pen up\n'
-    interpret(file)
+    externalInterpret(file)
     sys.stdout = sys.__stdout__
     self.assertEqual(expectedValue, capturedOutput.getvalue())
 
