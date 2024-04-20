@@ -49,7 +49,7 @@ def executeActions(action: list, actionNumber: str, currentSelectedItem: str):
   else:
     print('Invalid action')
 
-def interpret(fileName: str):
+def externalInterpret(fileName: str):
   file: __file__ = openFile(fileName)
   commands: list = readFile(file)
   file.close()
