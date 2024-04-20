@@ -79,7 +79,7 @@ class ExternalInterpretTestClass(unittest.TestCase):
   def test_interpret(self):
     capturedOutput = io.StringIO()
     sys.stdout = capturedOutput
-    file: str = 'commands.txt'
+    file: str = 'tasks.txt'
     expectedValue: str = \
       'Selecting pen 2\n' + \
       'Putting pen down\n' + \
