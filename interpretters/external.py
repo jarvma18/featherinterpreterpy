@@ -1,18 +1,18 @@
-def openFile(fileName: str):
+def open_file(file_name: str):
   try:
-    file = open(fileName, 'r')
+    file = open(file_name, 'r')
   except FileNotFoundError:
     raise Exception('File not found, check that the file exists in that path')
   else:
     return file
 
-def readFile(file):
+def read_file(file):
   return file.readlines()
 
-def splitString(string: str):
+def split_string(string: str):
   return string.split()
 
-def validateAction(action: str):
+def validate_action(action: str):
   if action == 'P':
     return ['select', 'pen']
   elif action == 'D':
@@ -30,36 +30,36 @@ def validateAction(action: str):
   else:
     return 'invalid_action'
   
-def executeSelectingAction(item: str, itemNumber: str):
-  return 'Selecting ' + item + ' ' + itemNumber
+def execute_selecting_action(item: str, item_number: str):
+  return 'Selecting ' + item + ' ' + item_number
 
-def executeItemDownOrUpAction(item: str, upOrDown: str):
-  return 'Putting ' + item + ' ' + upOrDown
+def execute_item_down_or_up_action(item: str, up_or_down: str):
+  return 'Putting ' + item + ' ' + up_or_down
 
-def executeDrawingAction(direction: str, length: int, unit: str):
+def execute_drawing_action(direction: str, length: int, unit: str):
   return 'Drawing ' + length + unit + ' to' + ' ' + direction
 
-def executeActions(action: list, actionNumber: str, currentSelectedItem: str):
+def execute_actions(action: list, action_number: str, current_selected_item: str):
   if action[0] == 'select':
-    print(executeSelectingAction(action[1], actionNumber))
+    print(execute_selecting_action(action[1], action_number))
   elif action[0] == 'item':
-    print(executeItemDownOrUpAction(currentSelectedItem, action[1]))
+    print(execute_item_down_or_up_action(current_selected_item, action[1]))
   elif action[0] == 'draw':
-    print(executeDrawingAction(action[1], actionNumber, 'cm'))
+    print(execute_drawing_action(action[1], action_number, 'cm'))
   else:
     print('Invalid action')
 
-def externalInterpret(fileName: str):
-  file: __file__ = openFile(fileName)
-  commands: list = readFile(file)
+def external_interpret(file_name: str):
+  file: __file__ = open_file(file_name)
+  commands: list = read_file(file)
   file.close()
-  currentSelectedItem: str = ''
+  current_selected_item: str = ''
   for command in commands:
-    value: list = splitString(command)
+    value: list = split_string(command)
     action: str = value[0]
     if (len(value) > 1):
       actionNumber: str = value[1]
-    action: list = validateAction(action)
+    action: list = validate_action(action)
     if action[0] == 'select':
-      currentSelectedItem: str = action[1]
-    executeActions(action, actionNumber, currentSelectedItem)
+      current_selected_item: str = action[1]
+    execute_actions(action, actionNumber, current_selected_item)
