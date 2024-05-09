@@ -1,29 +1,29 @@
 import sys
 
-def printUsage():
+def print_usage():
   print('Usage: python3 main.py <interpretter> [<filename>]')
 
 def external(arguments: list):
-  from interpretters.external import externalInterpret
+  from interpretters.external import external_interpret
   if len(arguments) < 2:
-    printUsage()
+    print_usage()
     sys.exit(1)
   fileName: str = arguments[1]
-  externalInterpret(fileName)
+  external_interpret(fileName)
 
 def internal():
-  from interpretters.internal import internalInterpret
-  internalInterpret()
+  from interpretters.internal import internal_interpret
+  internal_interpret()
 
-def validateUserArguments(arguments: list):
+def validate_user_arguments(arguments: list):
   if len(arguments) < 1:
-    printUsage()
+    print_usage()
     sys.exit(1)
 
 def main():
   arguments: list = sys.argv[1:]
   if len(arguments) < 1:
-    validateUserArguments(arguments)
+    validate_user_arguments(arguments)
   interpretter: str = arguments[0]
   if interpretter == 'external':
     external(arguments)
